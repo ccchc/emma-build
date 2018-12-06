@@ -1,3 +1,3 @@
 # emma-build
 
-Container images build for Emma
+Container images build that triggers automated deployment of Emma
