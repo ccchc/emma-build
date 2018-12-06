@@ -19,3 +19,11 @@ after_success:
   - git add .
   - git commit -m "New images from build $TRAVIS_BUILD_NUMBER"
   - git push "https://${GH_TOKEN}@github.com/ccchc/emma-deploy.git" master > /dev/null 2>&1
+
+notifications:
+  slack:
+    rooms:
+      - ccchc-workspace:Cj7KOvDLOsq38qmYVcDHl7Mr
+    on_success: always
+    on_failure: false
+    on_pull_requests: false
