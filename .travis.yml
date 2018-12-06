@@ -1,0 +1,21 @@
+services:
+  - docker
+
+before_install:
+  - docker build -t ccchc/nginx:latest .  
+  
+script:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push ccchc/nginx:latest
+
+after_success:
+  - git clone git://github.com/ccchc/emma-deploy.git
+  - cd emma-deploy
+  - touch update.txt
+  - echo $TRAVIS_BUILD_NUMBER > update.txt
+  - git remote
+  - git config user.email ccchc.ibm@gmail.com
+  - git config user.name ccchc
+  - git add .
+  - git commit -m "New images from build $TRAVIS_BUILD_NUMBER"
+  - git push "https://${GH_TOKEN}@github.com/ccchc/emma-deploy.git" master > /dev/null 2>&1
